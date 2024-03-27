@@ -1,31 +1,41 @@
-• Empleando la herramienta gráfica herramienta para el desarrollo de scripts instalada anteriormente desarrollar un script (con extensión sh) para facilitar la labor de administración del sistema. Entre las tareas que debería realizar el script se encuentran las siguientes: o Información del sistema (micro, memoria, red, sistema de archivos, etc.) 
+* [ ] Configuración básica del equipo:<br><br>
+	* [ ] actualización de repositorios<br>
+	* [ ] actualización del sistema y de la distro<br>
+	* [ ] nombre del equipo<br>
+	* [ ] configuración de red<br>
+	* [ ] fecha y hora<br>
+	* [ ] ficheros<br>
+	* etc <br><br>
 
-o Configuración básica del equipo: actualización de repositorios, actualización del sistema y de la distro, nombre del equipo, configuración de red, fecha y hora, ficheros etc. 
+* [ ] Gestión de la red y firewall <br><br>
+	* [ ] información <br>
+	* [ ] configuración <br><br>
 
-o Gestión de la red y firewall (información y configuración). 
+* [ ] Gestión de usuarios y grupos locales.<br><br>
+	* [ ] Usuarios<br>
+	* [ ] Grupos Locales<br>
+	* [ ] Empleando un fichero CSV. <br><br>
 
-o Gestión de usuarios y grupos locales. Se podrá crear usuarios y grupos locales empleando un fichero CSV que se podrá importar. 
+* [ ] Opciones de configuración de cuentas y contraseñas. <br><br>
 
-o Opciones de configuración de cuentas y contraseñas. 
+* [ ] Gestión de procesos. <br><br>
 
-o Gestión de procesos. 
+* [ ] Gestión de servicios. <br><br>
 
-o Gestión de servicios. 
+* [ ] Tareas programadas (Cron). <br><br>
 
-o Tareas programadas. 
+* [ ] Sucesos/Eventos/Logs<br><br>
 
-o Sucesos/Eventos/Logs 
+* [ ] Gestión, instalación y desinstalación de servidores (con gestión de sus procesos y servicios, y la ejecución de sus herramientas gráficas administrativas): dhcp, squid, ssh, etc. <br><br>
 
-o Sistema de archivos: discos físicos, particiones, volúmenes, cuotas, permisos, raid, etc. 
+* [ ] Reinicio y apagado de la máquina. <br><br>
 
-o Gestión, instalación y desinstalación de servidores (con gestión de sus procesos y servicios, y la ejecución de sus herramientas gráficas administrativas): dhcp, squid, ssh, etc. 
+* [ ] Permitir seleccionar el editor de texto (nano, vi, vim, nvim...)
 
-o Reinicio y apagado de la máquina. 
-        
-• Se podrá llamar desde el script principal a otros scripts o herramientas externas. 
+* [ ] Permitir cambiar de shell del mismo y de cualquier usuario del sistema (fish, zhs, bash...)
 
-• El script deberá venir acompañado de un manual de usuario, además de tener ayuda en pantalla para que el usuario pueda saber las opciones disponibles y cómo ejecutarlas. 
+* [ ] Se podrá llamar desde el script principal a otros scripts o herramientas externas. <br><br>
 
-• Además, deberá tener un parámetro que podrá ser -help (para ver ayuda de uso del programa), -version (versión del programa), -info (datos del autor). 
+* [ ] El script deberá venir acompañado de un manual de usuario, además de tener ayuda en pantalla para que el usuario pueda saber las opciones disponibles y cómo ejecutarlas. <br><br>
 
-• Tener en cuenta la calidad de la programación (uso de funciones, tabulación, limpieza del código, documentación y comentarios), presentación del interfaz y la facilidad de uso. 
+* [ ] Además, deberá tener un parámetro que podrá ser -help (para ver ayuda de uso del programa), -version (versión del programa), -info (datos del autor). <br><br>

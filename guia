@@ -1,10 +1,6 @@
 PROGRAMACIÓN SCRIPT/SHELL EN LINUX  PARA TAREAS ADMINISTRATIVAS
 
-• Instalar la última versión de Ubuntu Server de largo soporte (LTS). 
-
 • Instalar la última versión de la herramienta administrativa Webmin para poder facilitar la administración, y probar su funcionamiento. 
-
-• Instalar el entorno gráfico, para emplear alguna herramienta para el desarrollo de scripts como Notepad++, Visual Studio, etc. 
 
 • Empleando la herramienta gráfica herramienta para el desarrollo de scripts instalada anteriormente desarrollar un script (con extensión sh) para facilitar la labor de administración del sistema. Entre las tareas que debería realizar el script se encuentran las siguientes: o Información del sistema (micro, memoria, red, sistema de archivos, etc.) 
 
