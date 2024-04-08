@@ -28,7 +28,7 @@
 
 * [ ] Gestión, instalación y desinstalación de servidores (con gestión de sus procesos y servicios, y la ejecución de sus herramientas gráficas administrativas): dhcp, squid, ssh, etc. <br><br>
 
-* [ ] Reinicio y apagado de la máquina. <br><br>
+* [x] Reinicio y apagado de la máquina. <br><br> ✅ 2024-04-08
 
 * [ ] Permitir seleccionar el editor de texto (nano, vi, vim, nvim...)
 

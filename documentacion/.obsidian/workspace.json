@@ -14,12 +14,25 @@
               "type": "markdown",
               "state": {
                 "file": "Proyecto.md",
-                "mode": "source",
+                "mode": "preview",
                 "source": true
               }
             }
+          },
+          {
+            "id": "c69fc8d39c08144d",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Proyecto.md",
+                "mode": "preview",
+                "source": false
+              }
+            }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -146,7 +159,7 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "10c9393d4d7116ea",
+  "active": "c69fc8d39c08144d",
   "lastOpenFiles": [
     "ideas.md",
     "Proyecto.md",
