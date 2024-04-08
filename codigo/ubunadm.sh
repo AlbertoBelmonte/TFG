@@ -3,12 +3,29 @@
 # Para añadir caracteres especiales como las tildes y la ñ
 TERM=ansi
 
+# Comprobación identidad del usuario
+
+if [ $(whoami) != "root" ]; then
+   
+  title="Administración del servidor $(hostname)"
+  
+  message="Está ingresando como $(whoami), este script debe ejecutarse con el usuario root o con sudo.
+
+  Con root --> 'su -'
+  Con sudo --> 'sudo $0'"
+  
+  whiptail --title "$title" --msgbox "$message" 0 0 0 3>&1 1>&2 2>&3
+
+  exit
+
+fi
+
 # Textos del menu
 
 title="Administración del servidor $(hostname)"
 
 message="
-Este script sirve para administrar sistemas Linux, en concreto la distribución Ubuntu. Si tiene alguna duda, ejecute en una terminal el comando 'ubunadm -h'."
+Este script sirve para administrar sistemas Linux, en concreto la distribución Ubuntu. Si tiene alguna duda, ejecute en una terminal el comando '$0 -h'."
 
 options=(
     "Configuración básica del equipo" "Cambiar de nombre al equipo, actualizar repositorios..."
