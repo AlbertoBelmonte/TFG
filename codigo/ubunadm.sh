@@ -66,7 +66,7 @@ case $choice in
 
         ;;
     "Programar tareas")
-
+        ./functions/create_tasks/main.sh
         ;;
     "Reiniciar equipo")
         ./functions/power_pc/main.sh 
