@@ -1,21 +1,23 @@
 #!/bin/bash
 
-TERM=ansi
+# Establecer la codificación para caracteres especiales como las tildes y la ñ
+export LANG="es_ES.UTF-8"
 
+# Textos del menú
 title="Administración del servidor $(hostname)"
-message="Para programar las tareas empleo el comando 'cron'"
+message="Para programar tareas, se emplea el comando 'cron'"
 options=(
+    "Crear" "Crear una nueva tarea cron"
+    "Modificar" "Modificar una tarea cron existente"
+    "Borrar" "Borrar una tarea cron existente"
+    "Listar" "Lista las tarea cron existentes"
+)
 
-  "Crear" "Para crear una tarea cron"
-  "Modificar" "Para modificar una tarea cron"
-  "Borrar" "Para Borrar una tarea cron"
+# Mostrar el menú
+choice=$(dialog --stdout --title "$title" --menu "$message" 0 0 0 "${options[@]}")
 
-  )
-
-choice=$(whiptail --title "$title" --menu "$message" 0 0 0 "${options[@]}" 3>&1 1>&2 2>&3)
-
+# Procesar la opción seleccionada
 case $choice in
-
     "Crear")
         ./functions/create_tasks/options/create_c.sh
         ;;
@@ -24,6 +26,9 @@ case $choice in
         ;;
     "Borrar")
         ./functions/create_tasks/options/delete_c.sh
+        ;;
+    "Listar")
+        ./functions/create_tasks/options/list_c.sh
         ;;
     *)
         echo "Ninguna opción seleccionada."

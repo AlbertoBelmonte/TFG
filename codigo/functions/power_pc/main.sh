@@ -1,59 +1,56 @@
 #!/bin/bash
 
-# Para añadir caracteres especiales como las tildes y la ñ
+export LANG="es_ES.UTF-8"
 
-TERM=ansi
-
-# Textos del menu
-
+# Textos del menú
+#
 title="Administración del servidor $(hostname)"
 
-# Compruebo si el ha elegido previamente la opción de apagar o reiniciar
+# Comprobar si se ha elegido previamente la opción de apagar o reiniciar
 
 if [ "$1" = "--off" ]; then
 
-  message="¿Está seguro que desea APAGAR el equipo?"
+    message="¿Está seguro de que desea APAGAR el equipo?"
 
-else 
+else
 
-  message="¿Está seguro que desea REINICIAR el equipo?"
+    message="¿Está seguro de que desea REINICIAR el equipo?"
 
 fi
 
-# Cuenta atras para apagado/reiniciado
-
+# Función para el temporizador de apagado/reinicio
+#
 function countdown {
 
-  for i in {0..100..10}; do
-  
-    sleep 0.5
-    export TERM=linux
-    echo $i | whiptail --title "$title" --gauge "$status el sistema, presione CTRL+C para cancelar" 0 0 0
-  
-  done
+    for i in {0..10}; do
+
+        sleep 0.5
+        echo "$((i * 10))"
+
+    done
 
 }
 
 # Mostrar el menú
 
-choice=$(whiptail --title "$title" --yesno "$message" 0 0 3>&1 1>&2 2>&3)
+dialog --title "$title" --yesno "$message" 0 0
+
+# Verificar la respuesta del usuario
 
 if [ $? -eq 0 ]; then
 
-  if [ "$1" = "--off" ]; then
+    if [ "$1" = "--off" ]; then
 
-    status="Apagando"
-    countdown && poweroff
-     
-  else
+        countdown | dialog --title "$title" --gauge "Apagando el sistema, presione CTRL+C para cancelar" 0 0 0 && poweroff
 
-    status="Reiniciando"
-    countdown && reboot
+    else
 
-  fi
+        countdown | dialog --title "$title" --gauge "Reiniciando el sistema, presione CTRL+C para cancelar" 0 0 0 && reboot
+
+    fi
 
 else
 
-  echo "Ejecute de nuevo ubunadm para volver al menu"
+    echo "Ejecute de nuevo ubunadm para volver al menú"
 
 fi
