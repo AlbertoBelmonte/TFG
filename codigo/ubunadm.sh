@@ -27,10 +27,10 @@ options=(
     "1 Configuración básica del equipo" "Cambiar de nombre al equipo, actualizar repositorios..."
     "2 Gestión de la red y del firewall" "Cambiar la configuración TCP/IP de las tarjetas de red y modificar el firewall"
     "3 Gestión de usuarios y grupos locales" "Añadir y borrar usuarios y grupos del sistema"
-    "4 Configuración de cuentas y contraseñas" "Cambiar contraseñas y asignar grupos a los usuarios del sistema"
-    "5 Gestión de procesos" "Comprobar qué programas están en ejecución y cuántos recursos consumen"
-    "6 Gestión de servicios" "Comprobar y/o hacer que X programa se inicie al cargar el Sistema Operativo"
-    "7 Programar tareas" "Indicarle al sistema cuándo tiene que ejecutar ciertos scripts y/o programas"
+    "4 Gestión de procesos" "Comprobar qué programas están en ejecución y cuántos recursos consumen"
+    "5 Gestión de servicios" "Comprobar y/o hacer que X programa se inicie al cargar el Sistema Operativo"
+    "6 Programar tareas" "Indicarle al sistema cuándo tiene que ejecutar ciertos scripts y/o programas"
+    "7 Administrar discos" "Montar, desmontar y formatear unidades de almacenamiento"
     "8 Reiniciar equipo" "Reiniciará el equipo"
     "9 Apagar equipo" "Apagará por completo el equipo"
 )
@@ -42,19 +42,25 @@ choice=$(dialog --stdout --title "$title" --menu "$message" 0 0 0 "${options[@]}
 # Procesar la opción seleccionada
 case $choice in
     "1 Configuración básica del equipo")
+        ./functions/conf_pc/main.sh
         ;;
     "2 Gestión de la red y del firewall")
+        ./functions/conf_network/main.sh
         ;;
     "3 Gestión de usuarios y grupos locales")
+        ./functions/manage_user_group/main.sh
         ;;
-    "4 Configuración de cuentas y contraseñas")
+    "4 Gestión de procesos")
+        ./functions/manage_task/main.sh
         ;;
-    "5 Gestión de procesos")
+    "5 Gestión de servicios")
+        ./functions/manage_service/main.sh
         ;;
-    "6 Gestión de servicios")
+    "6 Programar tareas")
+        ./functions/manage_tasks/main.sh
         ;;
-    "7 Programar tareas")
-        ./functions/create_tasks/main.sh
+    "7 Administrar discos")
+        ./functions/manage_disk/main.sh
         ;;
     "8 Reiniciar equipo")
         ./functions/power_pc/main.sh 

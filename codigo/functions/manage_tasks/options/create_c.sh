@@ -94,6 +94,67 @@ function time_selected {
   
 }
 
+function concret_days {
+
+  message="\n¿Quiere que se ejecute la tarea en un día o dias en concreto?"
+
+  selected_days=$(dialog --stdout --title "$title" --yesno "$message" 0 0)
+
+  if [ $? -eq 0 ]; then
+
+    array_days=()
+
+    message="\n¿Cuando quiere que ejecute la tarea?"
+
+    while true; do
+
+      selected_days=$(dialog --stdout --title "$title" --calendar "$message" 0 0)
+
+      # Comprobar si el usuario a presionado a cancelar
+
+      if [[ -z $array_days && $? -eq 1 ]]; then
+
+        message="\nNo ha seleccionado ningún día, si no lo añade no se ejecutará la tarea. ¿Estás seguro?"
+
+        input_alert "$array_days" "time_selected" "$message"
+
+        if [ $? -eq 0 ]; then
+        
+          break
+        
+        else 
+        
+          continue
+        
+        fi
+
+        else 
+
+          dialog --stdout --title "$title" --yesno "\n¿Desea añadir otro día del mes, para la ejecución del script?" 0 0    
+
+      fi
+
+      if [ $? -eq 1 ]; then
+
+        array_days+=("$selected_days")
+
+        break
+        
+      fi
+
+      array_days+=("$selected_days")
+
+    done
+
+  else 
+
+    check=1
+    break
+
+  fi
+
+}
+
 function days {
 
   day_a=(
@@ -168,4 +229,21 @@ function input_alert {
 
 }
 
-users && enter_command && comment && time_selected && days && months
+# Obtención datos usuario (BRUTOS)
+
+users && time_selected && concret_days
+
+if [ $check -eq 1 ]; then
+
+  months && days && comment && enter_command
+
+else
+
+  comment && enter_command
+
+fi
+
+# Preparación datos (LIMPIO)
+
+
+# Comprobación previa insercción datos

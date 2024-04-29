@@ -29,16 +29,16 @@ choice=$(dialog --stdout --title "$title" --menu "$message" 0 0 0 "${options[@]}
 # Procesar la opción seleccionada
 case $choice in
     "Crear")
-        ./functions/create_tasks/options/create_c.sh
+        ./functions/manage_tasks/options/create_c.sh
         ;;
     "Modificar")
-        ./functions/create_tasks/options/modify_c.sh
+        ./functions/manage_tasks/options/modify_c.sh
         ;;
     "Borrar")
-        ./functions/create_tasks/options/delete_c.sh
+        ./functions/manage_tasks/options/delete_c.sh
         ;;
     "Listar")
-        ./functions/create_tasks/options/list_c.sh
+        ./functions/manage_tasks/options/list_c.sh
         ;;
     *)
         echo "Ninguna opción seleccionada."
