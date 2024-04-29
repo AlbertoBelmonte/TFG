@@ -40,7 +40,13 @@ sudo pacman -S dialog
 
 ## Uso
 
-cuando tengamos ya instalado dialog, clonas este repositorio y ejecutas el fichero codigo/ubunadm.sh, ejecutalo como usuario root o con sudo si no, no te dejerá usarlo
+cuando tengamos ya instalado dialog, clonas este repositorio, darle permisos de ejecución al archivo **ubunadm.sh** 
+
+```yaml
+chmod +x ubunadm.sh
+```
+
+ejecutalo como usuario root o con sudo para su correcto funcionamiento
 
 ## Estado proyecto
 
