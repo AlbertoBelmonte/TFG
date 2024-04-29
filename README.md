@@ -1,7 +1,7 @@
 
 # TFG - Script administración servidores ubuntu
 
-Hola buenas, mi nombre es Alberto Belmonte Gómez, y este mega script es mi TFG, dicho script es capaz de administrar un servidor UNIX/LINUX, permitiendonos lo siguiente:
+Hola buenas, mi nombre es Alberto Belmonte Gómez, y este mega script es mi TFG, dicho script es capaz de administrar un servidor ubuntu, permitiendonos lo siguiente:
 
 - Gestionar las tarjetas de red y del firewall
 - Gestionar usuarios y grupos locales
@@ -11,11 +11,13 @@ Hola buenas, mi nombre es Alberto Belmonte Gómez, y este mega script es mi TFG,
 - Realizar configuración básica, como administrar repositorios, cambiar la hora del sistema, cambiar el idioma...
 - Apagar y reiniciar el equipo
 
-He tratado de emplear herramientas que previamente ya están instaladas en el sistema o de que normal que esten en todas las distribuciones linux 
+En mi caso estoy haciendo el proyecto en ubuntu server 22.04, ya que es la distribución más empleada, no estoy seguro de si funcionaría correctamente en servidores debian, gentoo, centOS...
 
-El proyecto todavía NO está terminado
-
+El proyecto todavía NO está terminado.
+ 
 ## Herramientas empleadas
+
+He tratado de emplear herramientas que previamente ya están instaladas en la distribución ubuntu o de que normal esten en todas las distribuciones linux 
 
 - **Dialog**: para la interfaz del script
 - **Crontab**: para programar tareas
@@ -24,29 +26,27 @@ El proyecto todavía NO está terminado
 
 ## Instalación
 
-Para usar dicho script necesitamos tener previamente instalado dialog:
+Para usar dicho script necesitamos tener previamente instalado **dialog**, **ufw**, **netplan** y **cron**:
 
 ### apt
 
 ```yaml
-sudo apt install dialog
-```
-
-### pacman 
-
-```yaml
-sudo pacman -S dialog
+sudo apt install dialog ufw netplan cron
 ```
 
 ## Uso
 
-cuando tengamos ya instalado dialog, clonas este repositorio, darle permisos de ejecución al archivo **ubunadm.sh** 
+cuando tengas ya todo instalado, clonas este repositorio, y le das permisos de ejecución al archivo **ubunadm.sh** 
 
 ```yaml
 chmod +x ubunadm.sh
 ```
 
 ejecutalo como usuario root o con sudo para su correcto funcionamiento
+
+```yaml
+sudo ./ubunadm.sh
+```
 
 ## Estado proyecto
 
