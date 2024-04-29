@@ -1,1 +1,0 @@
-+ hacer que detecte que usuario está ejecutando el script para permitirle ejecutar x scripts
