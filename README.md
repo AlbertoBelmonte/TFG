@@ -24,11 +24,15 @@ Para usar dicho script necesitamos tener previamente instalado dialog:
 
 ### apt
 
+```yaml
 sudo apt install dialog
+```
 
 ### pacman 
 
+```yaml
 sudo pacman -S dialog
+```
 
 cuando tengamos ya instalado dialog, clonas este repositorio y ejecutas el fichero codigo/ubunadm.sh, ejecutalo como usuario root o con sudo si no, no te dejerá usarlo
 
