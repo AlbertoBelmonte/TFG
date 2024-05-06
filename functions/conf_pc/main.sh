@@ -7,7 +7,7 @@ title="Administración del servidor $(hostname)"
 
 # Explicación herramienta
 
-message="\nEste menú esta destinado a tareas básica de administración del servidor, como cambiar el idioma, administrar los repositorios..."
+message="\nEste menú esta destinado a tareas básicas del servidor, como cambiar el idioma, administrar los repositorios, cambiar el nombre del equipo..."
 
 alert=$(dialog --stdout --title "$title" --msgbox "$message" 0 0)
 
@@ -32,7 +32,7 @@ case $choice in
         ./functions/conf_pc/options/options_apt/main.sh
         ;;
     "2 Modificar fecha")
-        ./functions/conf_pc/options/change_date/main.sh
+        ./functions/conf_pc/options/change_time/main.sh
         ;;
     "3 Cambiar idioma")
         ./functions/conf_pc/options/change_language/main.sh

@@ -23,6 +23,7 @@ He tratado de emplear herramientas que previamente ya están instaladas en la di
 - **Crontab**: para programar tareas
 - **ufw**: para administrar las reglas del firewall
 - **netplan**: para administrar las tarjetas de red
+- **timedatectl**: para configurar la fecha y la hora del equipo
 
 ## Instalación
 
