@@ -10,11 +10,11 @@ title="Administración del servidor $(hostname)"
 
 if [ "$1" = "--off" ]; then
 
-    message="¿Está seguro de que desea APAGAR el equipo?"
+    message="\n¿Está seguro de que desea APAGAR el equipo?"
 
 else
 
-    message="¿Está seguro de que desea REINICIAR el equipo?"
+    message="\n¿Está seguro de que desea REINICIAR el equipo?"
 
 fi
 
@@ -41,11 +41,11 @@ if [ $? -eq 0 ]; then
 
     if [ "$1" = "--off" ]; then
 
-        countdown | dialog --title "$title" --gauge "Apagando el sistema, presione CTRL+C para cancelar" 0 0 0 && poweroff
+        countdown | dialog --title "$title" --gauge "\nApagando el sistema, presione CTRL+C para cancelar" 0 0 0 && poweroff
 
     else
 
-        countdown | dialog --title "$title" --gauge "Reiniciando el sistema, presione CTRL+C para cancelar" 0 0 0 && reboot
+        countdown | dialog --title "$title" --gauge "\nReiniciando el sistema, presione CTRL+C para cancelar" 0 0 0 && reboot
 
     fi
 
