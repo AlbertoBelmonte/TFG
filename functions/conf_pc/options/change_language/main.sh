@@ -19,11 +19,12 @@ choice=$(dialog --stdout --title "$title" --menu "$message" 0 0 0 "${options[@]}
 
 # Procesar la opción seleccionada
 case $choice in
-    "1 Configuración básica del equipo")
-        ./functions/conf_pc/main.sh
+
+    "1 Cambiar el idioma del teclado")
+        ./functions/conf_pc/options/change_language/options/change_keyboard.sh
         ;;
-    "2 Gestión de la red y del firewall")
-        ./functions/conf_network/main.sh
+    "2 Cambiar el idioma del sistema")
+        ./functions/conf_pc/options/change_language/options/change_system.sh
         ;;
     *)
         echo "Ninguna opción seleccionada."

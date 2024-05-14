@@ -3,6 +3,8 @@
 # Establecer la codificación
 export LANG="es_ES.UTF-8"
 
+title="Administración del servidor $(hostname)"
+
 r_package=""
 
 # Esta funcion pregunta al usuario si quiere elimanar los archivos de configuración de los paquetes seleccionados y los elimina
@@ -75,7 +77,15 @@ if [ $? -eq 0 ]; then
 
   r_package=$(dialog --stdout --title "$title" --inputbox "$message" 0 0)
 
-  purge_remove
+  if [ $? -eq 0 ]; then
+  
+    purge_remove
+
+  else 
+
+    echo "saliendo"
+
+  fi
 
 else 
 
@@ -85,6 +95,14 @@ else
 
   r_package=$(dialog --stdout --title "$title" --checklist "$message" 0 0 0 "${chose[@]}")
 
-  purge_remove 
+  if [ $? -eq 0 ]; then
+  
+    purge_remove
+
+  else 
+
+    echo "saliendo"
+
+  fi
 
 fi
