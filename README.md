@@ -52,11 +52,14 @@ sudo ./ubunadm.sh
 ## Estado proyecto
 
 - [5%] Gestionar las tarjetas de red y del firewall
+- [5%] Monitorio sistema
+- [90%] Administracion de paquetes
+- [5%] Caracteristicas equipo
 - [5%] Gestionar usuarios y grupos locales
 - [5%] administrar los discos del sistema
 - [5%] Gestionar procesos
-- [70%] Programar tareas
-- [5%] Realizar configuración básica, como administrar repositorios, cambiar la hora del sistema, cambiar el idioma...
+- [60%] Programar tareas
+- [30%] Realizar configuración básica, como administrar repositorios, cambiar la hora del sistema, cambiar el idioma...
 - [100%] Apagar y reiniciar el equipo
 
 ## Autor
