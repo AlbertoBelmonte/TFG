@@ -15,25 +15,41 @@ options=(
     "4 Eliminar paquetes" ""
 )
 
-# Mostrar el menú
+function select_option {
 
-choice=$(dialog --stdout --title "$title" --menu "$message" 0 0 0 "${options[@]}")
+  choice=$(dialog --stdout --title "$title" --cancel-label "Exit" --menu "$message" 0 0 0 "${options[@]}")
 
-# Procesar la opción seleccionada
-case $choice in
+}
+
+select_option
+
+# procesar la opción seleccionada
+
+while true; do
+
+  case $choice in
+
     "1 Actualizar repositorios")
-        ./functions/conf_pc/options/options_apt/options/update_repo.sh
-        ;;
+      ./functions/conf_pc/options/options_apt/options/update_repo.sh
+      select_option
+      ;;
+
     "2 Actualizar paquetes")
-        ./functions/conf_pc/options/options_apt/options/upgrade_packages.sh
-        ;;
+      ./functions/conf_pc/options/options_apt/options/upgrade_packages.sh
+      select_option
+      ;;
+
     "3 Instalar paquetes")
-        ./functions/conf_pc/options/options_apt/options/install_package.sh
-        ;;
+      ./functions/conf_pc/options/options_apt/options/install_package.sh
+      select_option
+      ;;
+
     "4 Eliminar paquetes")
-        ./functions/conf_pc/options/options_apt/options/remove_package.sh
-        ;;
+      ./functions/conf_pc/options/options_apt/options/remove_package.sh
+      select_option
+      ;;
+
     *)
-        echo "Ninguna opción seleccionada."
+      exit
         ;;
 esac

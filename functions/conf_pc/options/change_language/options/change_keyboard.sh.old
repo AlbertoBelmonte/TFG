@@ -5,7 +5,7 @@ export LANG="es_ES.UTF-8"
 
 title="Administración del servidor $(hostname)"
 
-key_ins=($(cat /etc/locale.gen | tail -n +7 | sed 's/^# //' | awk '{print $1, $2}'))
+key_ins=($(cut -d '#' -f 1- /etc/locale.gen | cut -c 2- | tail -n +7 > /tmp/check))
 
 actual_key=$(grep -v '^#' /etc/locale.gen | tail -n +3)
 
@@ -19,7 +19,7 @@ done
 
 message="\n¿Qué distribución de teclado desea tener? Actualmente tiene: $actual_key"
 
-selected_key=$(dialog --stdout --title "$title" --menu "$message" 0 0 0 "${chose[@]}")
+selected_key=$(dialog --stdout --title "$title" --checklist "$message" 0 0 0 "${chose[@]}")
 
 # No me devuelve correctamente el nombre completo me devuelve:
 # C.UTF-8

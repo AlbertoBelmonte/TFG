@@ -24,6 +24,8 @@ message+="\n¿Desea cambiar la hora y/o fecha del equipo?"
 
 dialog --stdout --title "$title" --yesno "$message" 0 0
 
+# Una vez comprobado que el usuario quiere modificar la hora, el script ejecutará el menu
+
 if [ $? -eq 0 ]; then
 
 message="Este menu permite modificar la hora, fecha y region, para ello emplea la herramienta 'timedatectl'."
@@ -37,24 +39,44 @@ options=(
 
 # Mostrar el menú
 
-choice=$(dialog --stdout --title "$title" --menu "$message" 0 0 0 "${options[@]}")
+function select_option {
 
-case $choice in
+  choice=$(dialog --stdout --title "$title" --menu "$message" 0 0 0 "${options[@]}")
+
+}
+
+select_option
+
+# Procesar la opción seleccionada
+
+while true; do
+
+  case $choice in
+    
     "1 Cambiar hora")
-        ./functions/conf_pc/options/change_time/option/change_hour.sh
-        ;;
+      ./functions/conf_pc/options/change_time/option/change_hour.sh
+      select_option
+      ;;
+      
     "2 Cambiar fecha")
-        ./functions/conf_pc/options/change_time/option/change_date.sh
-        ;;
+      ./functions/conf_pc/options/change_time/option/change_date.sh
+      select_option
+      ;;
+    
     "3 Cambiar region")
-        ./functions/conf_pc/options/change_time/option/change_region.sh
-        ;;
+      ./functions/conf_pc/options/change_time/option/change_region.sh
+      select_option
+      ;;
+    
     "4 Sincronizar hora NTP")
-        ./functions/conf_pc/options/change_time/option/switch_ntp.sh
-        ;;
-    *)
-        echo "Ninguna opción seleccionada."
-        ;;
-esac
+      ./functions/conf_pc/options/change_time/option/switch_ntp.sh
+      select_option
+      ;;
 
-fi
+     *)
+      exit
+      ;;
+
+  esac
+
+done

@@ -1,16 +1,16 @@
 #!/bin/bash
 
-# Establecer la codificación
-export LANG="es_ES.UTF-8"
+# establecer la codificación
+export lang="es_es.utf-8"
 
-# Comprobación de la identidad del usuario
+# comprobación de la identidad del usuario
 if [ "$(whoami)" != "root" ]; then
 
-    title="Administración del servidor $(hostname)"
-    message="Está ingresando como $(whoami), este script debe ejecutarse con el usuario root o con sudo.
+    title="administración del servidor $(hostname)"
+    message="está ingresando como $(whoami), este script debe ejecutarse con el usuario root o con sudo.
 
-Con root --> 'su -'
-Con sudo --> 'sudo ./ubunadm.sh'"
+con root --> 'su -'
+con sudo --> 'sudo ./ubunadm.sh'"
 
     dialog --title "$title" --msgbox "$message" 0 0
 
@@ -18,61 +18,79 @@ Con sudo --> 'sudo ./ubunadm.sh'"
 
 fi
 
-# Textos del menú
-title="Administración del servidor $(hostname)"
+# textos del menú
+title="administración del servidor $(hostname)"
 
-message="Este script sirve para administrar sistemas Linux, en concreto la distribución Ubuntu. Si tiene alguna duda, ejecute en una terminal el comando '$0 -h'."
+message="este script sirve para administrar sistemas linux, en concreto la distribución ubuntu. si tiene alguna duda, ejecute en una terminal el comando '$0 -h'."
 
 options=(
-    "1 Configuración básica del equipo" "Cambiar de nombre al equipo, actualizar repositorios..."
-    "2 Monitoreo sistema" "Ver que recursos del sistema se están consumiendo"
-    "3 Gestión de la red y del firewall" "Cambiar la configuración TCP/IP de las tarjetas de red y modificar el firewall"
-    "4 Gestión de usuarios y grupos locales" "Añadir y borrar usuarios y grupos del sistema"
-    "5 Gestión de procesos" "Comprobar qué programas están en ejecución y cuántos recursos consumen"
-    "6 Gestión de servicios" "Comprobar y/o hacer que X programa se inicie al cargar el Sistema Operativo"
-    "7 Programar tareas" "Indicarle al sistema cuándo tiene que ejecutar ciertos scripts y/o programas"
-    "8 Administrar discos" "Montar, desmontar y formatear unidades de almacenamiento"
-    "9 Reiniciar equipo" "Reiniciará el equipo"
-    "10 Apagar equipo" "Apagará por completo el equipo"
+    "1 configuración básica del equipo" "cambiar de nombre al equipo, actualizar repositorios..."
+    "2 monitoreo sistema" "comprobar qué programas están en ejecución y cuántos recursos consumen"
+    "3 gestión de la red y del firewall" "cambiar la configuración tcp/ip de las tarjetas de red y modificar el firewall"
+    "4 gestión de usuarios y grupos locales" "añadir y borrar usuarios y grupos del sistema"
+    "5 gestión de servicios" "comprobar y/o hacer que x programa se inicie al cargar el sistema operativo"
+    "6 programar tareas" "indicarle al sistema cuándo tiene que ejecutar ciertos scripts y/o programas"
+    "7 administrar discos" "montar, desmontar y formatear unidades de almacenamiento"
+    "8 reiniciar equipo" "reiniciará el equipo"
+    "9 apagar equipo" "apagará por completo el equipo"
 )
 
-# Mostrar el menú
+# mostrar el menú
 
-choice=$(dialog --stdout --title "$title" --menu "$message" 0 0 0 "${options[@]}")
+function select_option {
 
-# Procesar la opción seleccionada
+  choice=$(dialog --stdout --title "$title" --cancel-label "Exit" --menu "$message" 0 0 0 "${options[@]}")
+
+}
+
+select_option
+
+# procesar la opción seleccionada
+
+while true; do
+
 case $choice in
-    "1 Configuración básica del equipo")
-        ./functions/conf_pc/main.sh
+
+    "1 configuración básica del equipo")
+        ./functions/conf_pc/main.sh 
+        select_option
         ;;
-    "2 Monitoreo sistema")
+    "2 monitoreo sistema")
         bashtop
+        select_option
         ;;
-    "3 Gestión de la red y del firewall")
+    "3 gestión de la red y del firewall")
         ./functions/conf_network/main.sh
+        select_option
         ;;
-    "4 Gestión de usuarios y grupos locales")
+    "4 gestión de usuarios y grupos locales")
         ./functions/manage_user_group/main.sh
+        select_option
         ;;
-    "5 Gestión de procesos")
-        ./functions/manage_task/main.sh
-        ;;
-    "6 Gestión de servicios")
+    "5 gestión de servicios")
         ./functions/manage_service/main.sh
+        select_option
         ;;
-    "7 Programar tareas")
+    "6 programar tareas")
         ./functions/manage_tasks/main.sh
+        select_option
         ;;
-    "8 Administrar discos")
+    "7 administrar discos")
         ./functions/manage_disk/main.sh
+        select_option
         ;;
-    "9 Reiniciar equipo")
+    "8 reiniciar equipo")
         ./functions/power_pc/main.sh 
+        select_option
         ;;
-    "10 Apagar equipo")
+    "9 apagar equipo")
         ./functions/power_pc/main.sh --off
+        select_option
         ;;
     *)
-        echo "Ninguna opción seleccionada."
-        ;;
+      exit
+      ;;
+
 esac
+
+done

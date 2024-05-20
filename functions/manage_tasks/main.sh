@@ -22,25 +22,44 @@ options=(
     "Listar" "Lista las tarea cron existentes"
 )
 
-# Mostrar el menú
+function select_option {
 
-choice=$(dialog --stdout --title "$title" --menu "$message" 0 0 0 "${options[@]}")
+  choice=$(dialog --stdout --title "$title" --menu "$message" 0 0 0 "${options[@]}")
+
+}
+
+select_option
 
 # Procesar la opción seleccionada
-case $choice in
+
+while true; do
+
+  case $choice in
+    
     "Crear")
-        ./functions/manage_tasks/options/create_c.sh
-        ;;
+      ./functions/manage_tasks/options/create_c.sh
+      select_option
+      ;;
+
     "Modificar")
-        ./functions/manage_tasks/options/modify_c.sh
-        ;;
+      ./functions/manage_tasks/options/modify_c.sh
+      select_option
+      ;;
+
     "Borrar")
-        ./functions/manage_tasks/options/delete_c.sh
-        ;;
+      ./functions/manage_tasks/options/delete_c.sh
+      select_option
+      ;;
+
     "Listar")
-        ./functions/manage_tasks/options/list_c.sh
-        ;;
+      ./functions/manage_tasks/options/list_c.sh
+      select_option
+      ;;
+
     *)
-        echo "Ninguna opción seleccionada."
-        ;;
-esac
+      exit
+      ;;
+
+  esac
+
+done

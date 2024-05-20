@@ -22,17 +22,30 @@ options=(
 
 # Mostrar el menú
 
-choice=$(dialog --stdout --title "$title" --menu "$message" 0 0 0 "${options[@]}")
+function select_option {
 
-# Procesar la opción seleccionada
-case $choice in
-    "Configurar NIC")
-        ./functions/conf_network/options_NIC/main_NIC.sh
-        ;;
-    "Configurar Firewall")
-        ./functions/conf_network/options_FIRE/main_FIRE.sh
-        ;;
-    *)
-        echo "Ninguna opción seleccionada."
-        ;;
-esac
+  choice=$(dialog --stdout --title "$title" --cancel-label "Exit" --menu "$message" 0 0 0 "${options[@]}")
+
+}
+
+select_option
+
+# procesar la opción seleccionada
+
+while true; do
+
+  case $choice in
+      "Configurar NIC")
+          ./functions/conf_network/options_NIC/main_NIC.sh
+          select_option
+          ;;
+      "Configurar Firewall")
+          ./functions/conf_network/options_FIRE/main_FIRE.sh
+          select_option
+          ;;
+      *)
+          echo "Ninguna opción seleccionada."
+          ;;
+  esac
+
+done
