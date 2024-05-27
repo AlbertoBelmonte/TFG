@@ -1,8 +1,5 @@
 #!/bin/bash
 
-# Establecer la codificación
-export LANG="es_ES.UTF-8"
-
 # Textos del menú
 title="Administración del servidor $(hostname)"
 
@@ -30,6 +27,7 @@ while true; do
   case $choice in
   
     "1 Cambiar el idioma del teclado")
+      ./functions/conf_pc/options/change_language/options/prueba.sh
       ./functions/conf_pc/options/change_language/options/change_keyboard.sh
       select_option
       ;;

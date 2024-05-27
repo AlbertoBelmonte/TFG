@@ -1,8 +1,5 @@
 #!/bin/bash
 
-# establecer la codificación
-export lang="es_es.utf-8"
-
 # comprobación de la identidad del usuario
 if [ "$(whoami)" != "root" ]; then
 
