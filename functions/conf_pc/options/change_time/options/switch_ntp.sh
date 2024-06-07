@@ -5,9 +5,8 @@ export LANG="es_ES.UTF-8"
 
 title="Administración del servidor $(hostname)"
 
-function check {
 
-  check_ntp=$(timedatectl show | grep 'NTP=yes')
+  check_ntp=$(timedatectl show | grep -w 'NTP=yes')
 
   if [ -z $check_ntp ]; then
 
@@ -19,11 +18,9 @@ function check {
 
   fi
 
-}
-
-check
-
 dialog --stdout --title "$title" --yesno "$message" 0 0
+
+echo "yepa"
 
 #if [ $? -eq 0 ]; then
 

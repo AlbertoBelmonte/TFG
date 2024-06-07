@@ -2,12 +2,8 @@
 
 title="Administración del servidor $(hostname)"
 
-# Explicación menu 
-
-message="\nEste menú esta destinado a tareas básicas del servidor, como cambiar el idioma, administrar los repositorios, cambiar el nombre del equipo..."
-
-title="Administración del servidor $(hostname)"
 message="\nEn este menu podrá realizar configuraciones básicas del equipo, como cambiar de nombre al equipo, cambiar el idioma del sistema, modificar la fecha"
+
 options=(
     "1 Administrar repositorios" "instalar, actualizar y borrar repositorios"
     "2 Modificar fecha" "Cambiar la hora del sistema"

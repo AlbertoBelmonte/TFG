@@ -21,18 +21,20 @@ He tratado de emplear herramientas que previamente ya están instaladas en la di
 
 - **Dialog**: para la interfaz del script
 - **Crontab**: para programar tareas
+- **cfdisk**: para administrar los discos del sistema
 - **ufw**: para administrar las reglas del firewall
 - **netplan**: para administrar las tarjetas de red
 - **timedatectl**: para configurar la fecha y la hora del equipo
+- **Bashtop**: para administrar los procesos del sistema
 
 ## Instalación
 
-Para usar dicho script necesitamos tener previamente instalado **dialog**, **ufw**, **netplan** y **cron**:
+Para usar dicho script necesitamos tener previamente instalado **dialog**, **ufw**, **netplan**, **bashtop**, **timedatectl**, **cfdisk** y **cron** en principio el propio script debería instalar y/o actualizar los paquetes necesarios:
 
 ### apt
 
 ```yaml
-sudo apt install dialog ufw netplan cron bashtop
+sudo apt install dialog ufw netplan cron bashtop timedatectl cfdisk
 ```
 
 ## Uso
@@ -54,11 +56,11 @@ sudo ./ubunadm.sh
 - [5%] Gestionar las tarjetas de red y del firewall
 - [80%] Monitorio sistema
 - [5%] Caracteristicas equipo
-- [5%] Gestionar usuarios y grupos locales
+- [50%] Gestionar usuarios y grupos locales
 - [80%] administrar los discos del sistema
 - [5%] Gestionar servicios
 - [60%] Programar tareas
-- [80%] Realizar configuración básica, como administrar repositorios, cambiar la hora del sistema, cambiar el idioma...
+- [90%] Realizar configuración básica, como administrar repositorios, cambiar la hora del sistema, cambiar el idioma...
 - [100%] Apagar y reiniciar el equipo
 
 ## Autor
