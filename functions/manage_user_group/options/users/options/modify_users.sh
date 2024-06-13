@@ -91,7 +91,7 @@ if [[ $? -eq 0 ]]; then
       
       if [[ "${user_data[3]}" != "$comment" ]]; then
 
-        sudo usermod -c "$comment" ${user_data[0]}
+        sudo usermod -c "$comment" "${user_data[0]}"
       
       fi
 
