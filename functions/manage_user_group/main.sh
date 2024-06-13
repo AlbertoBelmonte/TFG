@@ -13,7 +13,7 @@ options=(
 
 function select_option {
 
-  choice=$(dialog --stdout --title "$title" --menu "$message" 0 0 0 "${options[@]}")
+  choice=$(dialog --stdout --title "$title" --cancel-label "Atras" --menu "$message" 0 0 0 "${options[@]}")
 
 }
 

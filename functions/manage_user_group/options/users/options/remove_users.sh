@@ -3,7 +3,7 @@
 title="Administración del servidor $(hostname)"
 message="\nSeleccione el usuario/s que desea eliminar del sistema"
 
-path_r_users="/tmp/temp_users"
+path_r_users=$(mktemp)
 
 # Obtención de TODOS los usuarios del sistema y ordenarlos según ID de menos a mayor
 
@@ -15,17 +15,10 @@ ids=($(awk '{print $2}' $path_r_users))
 # Almacenamiento de los usuarios con su respectiva ID en una variable
 
 chose=()
-system_user=()
 
 for ((i=0; i<${#users[@]}; i++)); do
 
   chose+=("${users[$i]}" "${ids[$i]}" "")
-
-  if [ ${ids[$i]} -lt 1000 ];then
-  
-    system_user+=("${users[$i]}")
-  
-  fi
 
 done
 
@@ -36,41 +29,59 @@ selec_system_user=()
 
 for user in "${selected_user[@]}"; do
 
-  for sys_user in "${system_user[@]}"; do
- 
-    if [[ $user == $sys_user ]] ;then
+  id=$(id -u $user)
 
-      selec_system_user+=("$user")
+  if [[ $id -lt 1000 ]] ;then
 
-    fi
+    selec_system_user+=("$user")
 
-  done
+  fi
 
 done
+  
+  if [ ${#selec_system_user[@]} -eq 0 ];then
+  
+    message="\nVoy a eliminar los siguientes usuarios:\n\n- '${selected_user[@]}'\n\n¿Está seguro que desea borrarlos?, voy a eliminar tanto al usuario, como el HOME de dicho usuario/s."
+  
+  else
+  
+    message="\nVoy a eliminar los siguientes usuarios:\n\n- '${selected_user[@]}'\n\nDe los cuales los siguientes usuarios son de sistema:\n\n- '${selec_system_user[@]}'\n\n¿Está seguro que también desea también eliminarlos?"
+  
+  fi
+  
+  dialog --stdout --title "$title" --yesno "$message" 0 0
 
-check_sys_user=0
+  error=()
+  
+  if [ $? -eq 0 ]; then
+  
+    for user in "${selected_user[@]}"; do
+  
+      userdel -rf $user
 
-if [ ${#selec_system_user[@]} -eq 0 ];then
+      if [[ $? -ne 0 ]]; then
 
-  message="\nVoy a eliminar los siguientes usuarios: '${selected_user[@]}'\n¿Está seguro que desea borrarlos?, voy a eliminar tanto al usuario, como el HOME de dicho usuario/s."
+        error_user=($user)
 
-else
+      fi
+  
+    done
 
-  message="\nVoy a eliminar los siguientes usuarios: '${selected_user[@]}'\nDe los cuales '${selec_system_user[@]}' son usuarios de sistema, ¿Está seguro que también desea también eliminarlos?"
+    if [[ ${error_user[@]} -eq 0 ]]; then
+  
+      message="\nLos usuarios '${selected_user[@]}' han sido eliminados del sistema"
+    
 
-fi
+    else
 
-dialog --stdout --title "$title" --yesno "$message" 0 0
+      message="\nLos usuarios '${selected_user[@]}' han sido eliminados del sistema, pero los usuarios ${error_user[@]} no se han podido eliminar, revise el estado de los usuarios"
+    
+    fi
 
-if [ $? -eq 0 ]; then
+    dialog --stdout --title "$title" --msgbox "$message" 0 0
 
-  for user in "${#selected_user[@]}"; do
+  else
 
-    userdel -rf $user
-
-  done
-
-  message="\nLos usuarios '${selected_user[@]}' han sido eliminados del sistema"
-  dialog --stdout --title "$title" --msgbox "$message" 0 0
-
+    exit
+  
 fi

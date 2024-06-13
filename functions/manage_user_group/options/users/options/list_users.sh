@@ -1,7 +1,9 @@
 #!/bin/bash
 
-message="\nSeleccione el usuario"
-path_r_users="/tmp/temp_users"
+title="Administración del servidor $(hostname)"
+message="\nListado de usuarios del sistema"
+
+path_r_users=$(mktemp)
 
 # Obtención de TODOS los usuarios del sistema y ordenarlos según ID de menos a mayor
 
@@ -21,3 +23,5 @@ for ((i=0; i<${#users[@]}; i++)); do
 done
 
 selected_user=$(dialog --stdout --title "$title" --menu "$message" 0 0 0 "${chose[@]}")
+
+rm $path_r_users
