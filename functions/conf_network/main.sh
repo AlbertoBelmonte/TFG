@@ -24,7 +24,7 @@ options=(
 
 function select_option {
 
-  choice=$(dialog --stdout --title "$title" --cancel-label "Exit" --menu "$message" 0 0 0 "${options[@]}")
+  choice=$(dialog --stdout --title "$title" --cancel-label "Atras" --menu "$message" 0 0 0 "${options[@]}")
 
 }
 
@@ -44,7 +44,7 @@ while true; do
           select_option
           ;;
       *)
-          echo "Ninguna opción seleccionada."
+        exit
           ;;
   esac
 

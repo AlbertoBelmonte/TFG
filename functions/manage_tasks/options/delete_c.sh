@@ -1,45 +1,102 @@
 #!/bin/bash
 
-TERM=ansi
+title="Administración de  Cron"
 
-title="Administración del servidor $(hostname)"
-message="Para programar las tareas empleo el comando 'cron'"
+# Obtener todos los usuarios del sistema
+users=$(cut -d: -f1 /etc/passwd)
 
-choice=$(whiptail --title "$title" --menu "$message" 0 0 0 "${options[@]}" 3>&1 1>&2 2>&3)
+# Crear una lista de usuarios con tareas cron
+user_list=()
 
-# Creo un array que almacena el nombre del usuarios con sus respectivas ID's
+# Iterar sobre cada usuario y verificar si tienen tareas cron
 
-users=$(awk -F: '{print $1}' /etc/passwd)
-id_users=$(awk -F: '{print $3}' /etc/passwd)
+for user in $users; do
 
-# Declaro una array multidimensional (un diccionario) para almacenar el nombre de los usuarios con sus respectivas id
+    user_crontab=$(crontab -l -u $user 2>/dev/null | grep -v '^\s*#' | grep -v '^\s*$')
 
-#declare -A rough_users
-#
-#for ((i=0; i<${#users[@]}; i++)); do
-#
-#  rough_users[${users[$i]}]=${id_users[$i]}
-#
-#done
+    if [[ -n "$user_crontab" ]]; then
 
-# Separo los usuarios del sistema de los usuarios de los servicios
+        user_list+=("$user" "")
 
-#for ((i=0; i<${#rough_users[@]}; i++)); do
-#
-#  if []; then
-#  
-#      
-#  
-#  fi
-#
-#done
+    fi
 
-#options=()
-#
-#for ((i=0; i<=${#rough_users[@]}; i++));do
-#
-#  options=+($rough_user[i])
-#
-#done
-#
-#name=$(whiptail --title "$title" --inputbox "$message" 0 0 3>&1 1>&2 2>&3)
+done
+
+# Comprobar si se encontraron usuarios con tareas cron
+
+if [ ${#user_list[@]} -eq 0 ]; then
+
+    dialog --title "$title" --msgbox "\nNo se encontraron tareas cron para ningún usuario." 0 0
+    exit
+
+fi
+
+# Seleccionar un usuario
+
+selected_user=$(dialog --stdout --title "$title" --menu "Seleccione un usuario para administrar sus tareas cron:" 0 0 0 "${user_list[@]}")
+
+if [[ -z "$selected_user" ]]; then
+
+    exit
+
+fi
+
+# Obtener las tareas cron del usuario seleccionado
+
+user_crontab=$(crontab -l -u $selected_user 2>/dev/null | grep -v '^\s*#' | grep -v '^\s*$')
+
+# Crear opciones para el checklist
+
+options=()
+counter=1
+
+while IFS= read -r line; do
+    options+=("$counter" "$line" "off")
+    ((counter++))
+done <<< "$user_crontab"
+
+# Mostrar el checklist para seleccionar tareas a eliminar
+
+selected_tasks=$(dialog --stdout --title "$title" --checklist "Seleccione las tareas cron a eliminar:" 0 0 0 "${options[@]}")
+
+if [[ -n "$selected_tasks" ]]; then
+
+    # Convertir selected_tasks en un array
+
+    IFS=" " read -r -a tasks_array <<< "$selected_tasks"
+    
+    # Crear una copia del crontab del usuario y eliminar las tareas seleccionadas
+    
+    updated_crontab=$(echo "$user_crontab")
+
+    for task_index in "${tasks_array[@]}"; do
+
+        task=$(echo "$user_crontab" | sed -n "${task_index}p")
+        updated_crontab=$(echo "$updated_crontab" | grep -vF "$task")
+
+    done
+
+    # Actualizar el crontab del usuario
+
+    echo "$updated_crontab" | crontab -u $selected_user -
+
+    dialog --title "$title" --msgbox "\nTareas cron eliminadas con éxito." 0 0
+
+else
+
+    # Preguntar si desea eliminar todas las tareas
+
+    dialog --stdout --title "$title" --yesno "\n¿Desea eliminar todas las tareas cron del usuario $selected_user?" 0 0
+
+    if [[ $? -eq 0 ]]; then
+
+      crontab -r -u $selected_user
+
+      dialog --title "$title" --msgbox "\nTodas las tareas cron del usuario $selected_user han sido eliminadas." 0 0
+
+    else
+        
+      exit
+
+    fi
+fi

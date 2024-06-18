@@ -9,7 +9,7 @@ title="Administración del servidor $(hostname)"
 
 message="\nEste menú esta destinado a la configuración de tarjetas de red, para su configuración se empleará la herramienta Netplan.\n\nNetplan es una herramienta de sistemas UNIX/LINUX que nos permite configurar las tarjetas de red mediante .yml"
 
-alert=$(dialog --stdout --title "$title" --msgbox "$message" 0 0)
+alert=$(dialog --stdout --title "$title" --cancel-label "Atras"--msgbox "$message" 0 0)
 
 # Textos del menú
 
@@ -22,17 +22,17 @@ options=(
 
 # Mostrar el menú
 
-choice=$(dialog --stdout --title "$title" --menu "$message" 0 0 0 "${options[@]}")
+choice=$(dialog --stdout --title "$title" --cancel-label "Atras" --menu "$message" 0 0 0 "${options[@]}")
 
 # Procesar la opción seleccionada
 case $choice in
     "Modificar")
-        ./functions/conf_network/options/modify_n.sh
+        ./functions/conf_network/options_NIC/options/modify_n.sh
         ;;
     "Listar")
-        ./functions/conf_network/options/list_n.sh
+        ./functions/conf_network/options_NIC/options/list_n.sh
         ;;
     *)
-        echo "Ninguna opción seleccionada."
+      exit
         ;;
 esac

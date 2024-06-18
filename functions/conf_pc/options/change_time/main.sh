@@ -1,10 +1,6 @@
 #!/bin/bash
 
-# Establecer la codificación para caracteres especiales como las tildes y la ñ
-export LANG="es_ES.UTF-8"
-
 title="Administración del servidor $(hostname)"
-
 message="\nAhora mismo su equipo tiene la siguiente fecha y hora:\n\n"
 
 data_time=()
@@ -33,7 +29,7 @@ if [ $? -eq 0 ]; then
       "1 Cambiar hora" "Cambiar la hora manualmente"
       "2 Cambiar fecha" "Cambiar la fecha manualmente"
       "3 Cambiar region" "Cambiar la region manualmente"
-      "4 Sincronizar hora con servidor NTP " "Activar/Desactivar sincronización de la hora con un servidor NTP"
+      "4 Sincronizar hora con servidor NTP" "Activar/Desactivar sincronización de la hora con un servidor NTP"
   )
   
   # Mostrar el menú

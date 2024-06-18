@@ -1,45 +1,40 @@
 #!/bin/bash
 
-TERM=ansi
-
 title="Administración del servidor $(hostname)"
-message="Para programar las tareas empleo el comando 'cron'"
 
-choice=$(whiptail --title "$title" --menu "$message" 0 0 0 "${options[@]}" 3>&1 1>&2 2>&3)
+# Obtener todos los usuarios del sistema
 
-# Creo un array que almacena el nombre del usuarios con sus respectivas ID's
+users=$(cut -d: -f1 /etc/passwd)
+tempfile=$(mktemp)
 
-users=$(awk -F: '{print $1}' /etc/passwd)
-id_users=$(awk -F: '{print $3}' /etc/passwd)
+# Iterar sobre cada usuario y obtener sus tareas cron
+for user in $users; do
 
-# Declaro una array multidimensional (un diccionario) para almacenar el nombre de los usuarios con sus respectivas id
+    user_crontab=$(crontab -l -u $user 2>/dev/null | grep -v '^\s*#' | grep -v '^\s*$')
 
-#declare -A rough_users
-#
-#for ((i=0; i<${#users[@]}; i++)); do
-#
-#  rough_users[${users[$i]}]=${id_users[$i]}
-#
-#done
+    if [[ -n "$user_crontab" ]]; then
 
-# Separo los usuarios del sistema de los usuarios de los servicios
+        found_cron_jobs=true
+        echo "---------------------------------------------------------" >> $tempfile
+        echo -e "\nTareas Cron para el usuario: $user" >> $tempfile
+        echo "---------------------------------------------------------" >> $tempfile
+        echo "$user_crontab" >> $tempfile
 
-#for ((i=0; i<${#rough_users[@]}; i++)); do
-#
-#  if []; then
-#  
-#      
-#  
-#  fi
-#
-#done
+    fi
 
-#options=()
-#
-#for ((i=0; i<=${#rough_users[@]}; i++));do
-#
-#  options=+($rough_user[i])
-#
-#done
-#
-#name=$(whiptail --title "$title" --inputbox "$message" 0 0 3>&1 1>&2 2>&3)
+done
+
+# Comprobar si se encontraron tareas cron
+
+if $found_cron_jobs; then
+
+    # Mostrar las tareas cron en un cuadro de diálogo
+    dialog --title "$title" --textbox "$tempfile" 0 0
+
+else
+
+    dialog --title "$title" --msgbox "\nNo se encontraron tareas cron para ningún usuario." 0 0
+
+fi
+
+rm -f $tempfile

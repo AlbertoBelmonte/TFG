@@ -11,13 +11,14 @@ message="\nEste menu permite actualizar tantos los repositorios como el sistema,
 options=(
     "1 Actualizar repositorios" ""
     "2 Actualizar paquetes" ""
-    "3 Instalar paquetes" ""
-    "4 Eliminar paquetes" ""
+    "3 Actualizar kernel" ""
+    "4 Instalar paquetes" ""
+    "5 Eliminar paquetes" ""
 )
 
 function select_option {
 
-  choice=$(dialog --stdout --title "$title" --cancel-label "Exit" --menu "$message" 0 0 0 "${options[@]}")
+  choice=$(dialog --stdout --title "$title" --cancel-label "Atras" --menu "$message" 0 0 0 "${options[@]}")
 
 }
 
@@ -39,17 +40,25 @@ while true; do
       select_option
       ;;
 
-    "3 Instalar paquetes")
+    "3 Actualizar kernel")
+      ./functions/conf_pc/options/options_apt/options/update_kernel.sh
+      select_option
+      ;;
+
+    "4 Instalar paquetes")
       ./functions/conf_pc/options/options_apt/options/install_package.sh
       select_option
       ;;
 
-    "4 Eliminar paquetes")
+    "5 Eliminar paquetes")
       ./functions/conf_pc/options/options_apt/options/remove_package.sh
       select_option
       ;;
 
     *)
       exit
-        ;;
-esac
+      ;;
+
+    esac
+
+done

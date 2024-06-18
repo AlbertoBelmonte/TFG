@@ -6,9 +6,7 @@ title="Administración del servidor $(hostname)"
 
 keyboard=$(localectl status | grep 'Layout' | awk '{print $3}')
 
-message="\nActualmente tiene $keyboard ¿Desea cambiar la distribución del teclado?, en caso de estar conectado mediante SSH tendra que cambiar la configuración de su cliente SSH"
-
-fi
+message="\nActualmente tiene la distrubución $keyboard ¿Desea cambiar la distribución del teclado?, en caso de estar conectado mediante SSH tendra que cambiar la configuración de su cliente SSH"
 
 dialog --stdout --title "$title" --yesno "$message" 0 0
 

@@ -28,37 +28,18 @@ if [ $? -eq 0 ] ;then
 
     packages=$(dialog --stdout --title "$title" --inputbox "$message" 0 0)
 
-    if [ -z $packages]; then
-
-      while true; do
-
-        dialog --stdout --title "$title" --yesno "\nNo ha introducido ningún nombre, ¿Desea actualizar algun paquete?" 0 0
-
-        if [ $? -eq 0 ]; then
-
-            break
-
-          else
-
-            exit
-
-        fi
-        
-      done
+    if sudo apt install $packages -y; then
+      
+      dialog --stdout --title "$title" --msgbox "\nLos paquetes '$packages', se han actualizado correctamente." 0 0
 
     else
+      
+      exit_code=$(tail $path_output)
 
-      if sudo apt install --only-upgrade $packages -y; then
-      
-        dialog --stdout --title "$title" --msgbox "\nLos paquetes '$packages', se han actualizado correctamente." 0 0
-
-      else
-      
-        exit_code=$(tail $path_output)
-        dialog --stdout --title "$title" --msgbox "\nError al actualizar los paquetes '$packages'. Este es el error\n\n$exit_code" 0 0
-      
-      fi
+      dialog --stdout --title "$title" --msgbox "\nError al actualizar los paquetes '$packages'. Este es el error\n\n$exit_code" 0 0
 
     fi
+
+    exit
 
 fi

@@ -34,7 +34,7 @@ Para usar dicho script necesitamos tener previamente instalado **dialog**, **ufw
 ### apt
 
 ```yaml
-sudo apt install dialog ufw netplan cron bashtop timedatectl cfdisk
+sudo apt install dialog ufw netplan cron bashtop timedatectl cfdisk neofetch ntp
 ```
 
 ## Uso

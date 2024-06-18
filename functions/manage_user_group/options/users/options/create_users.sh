@@ -94,10 +94,6 @@ function one_user {
 
     create_user 
 
-  else 
-
-    one_user
-
   fi 
 
 }

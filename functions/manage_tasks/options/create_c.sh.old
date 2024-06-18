@@ -1,13 +1,11 @@
 #!/bin/bash
 
-export LANG="es_ES.UTF-8"
-
 title="\nAdministración del servidor $(hostname)"
 
 function users {
 
   message="\nSeleccione el usuario"
-  path_r_users="/tmp/temp_users"
+  path_r_users=$(mktemp)
   
   # Obtención de TODOS los usuarios del sistema y ordenarlos según ID de menos a mayor
 
@@ -56,37 +54,103 @@ function time_selected {
 
     selected_time=$(dialog --stdout --title "$title" --timebox "$message" 0 0)
 
+    # Comprobar si el usuario a presionado a cancelar
+
     if [[ -z $array_time && $? -eq 1 ]]; then
 
-      dialog --stdout --title "$title" --yesno "\nNo ha añadido ninguna hora, si no la asigna el script se ejectura cada minuto, ¿Está seguro?" 0 0
+      message="\nNo ha seleccionado ningún hora, si no lo añade se ejecutará cada minuto. ¿Estás seguro?"
+
+      input_alert "$array_time" "time_selected" "$message"
 
       if [ $? -eq 0 ]; then
-
+      
         break
+      
+      else 
+      
+        continue
+      
+      fi
 
       else 
 
-        continue
-
-      fi
-
-    else
-
-      dialog --stdout --title "$title" --yesno "\n¿Desea añadir otro momento de ejecución?" 0 0
+        dialog --stdout --title "$title" --yesno "\n¿Desea añadir otro momento de ejecución?" 0 0    
 
     fi
 
     if [ $? -eq 1 ]; then
 
       array_time+=("$selected_time")
-      break
 
+      break
+      
     fi
-    
+
     array_time+=("$selected_time")
 
   done
   
+}
+
+function concret_days {
+
+  message="\n¿Quiere que se ejecute la tarea en un día o dias en concreto?"
+
+  selected_days=$(dialog --stdout --title "$title" --yesno "$message" 0 0)
+
+  if [ $? -eq 0 ]; then
+
+    array_days=()
+
+    message="\n¿Cuando quiere que ejecute la tarea?"
+
+    while true; do
+
+      selected_days=$(dialog --stdout --title "$title" --calendar "$message" 0 0)
+
+      # Comprobar si el usuario a presionado a cancelar
+
+      if [[ -z $array_days && $? -eq 1 ]]; then
+
+        message="\nNo ha seleccionado ningún día, si no lo añade no se ejecutará la tarea. ¿Estás seguro?"
+
+        input_alert "$array_days" "time_selected" "$message"
+
+        if [ $? -eq 0 ]; then
+        
+          break
+        
+        else 
+        
+          continue
+        
+        fi
+
+        else 
+
+          dialog --stdout --title "$title" --yesno "\n¿Desea añadir otro día del mes, para la ejecución del script?" 0 0    
+
+      fi
+
+      if [ $? -eq 1 ]; then
+
+        array_days+=("$selected_days")
+
+        break
+        
+      fi
+
+      array_days+=("$selected_days")
+
+    done
+
+  else 
+
+    check=1
+    break
+
+  fi
+
 }
 
 function days {
@@ -102,30 +166,82 @@ function days {
       8  "*"          "off"
   )
 
+  selected_day=()
+
   selected_day=$(dialog --stdout --title "$title" --checklist "\nSeleccionar día(s) de la semana" 0 0 0 "${day_a[@]}")
+
+  # Comprobar si el usuario a presionado a cancelar
+
+  message="\nNo ha seleccionado ningún día, si no lo añade se ejecutará todos los días. ¿Estás seguro?"
+
+  input_alert "$selected_day" "days" "$message"
 
 }
 
 function months {
-
     month_a=(
-      1  "Enero"      "off"
-      2  "Febrero"    "off"
-      3  "Marzo"      "off"
-      4  "Abril"      "off"
-      5  "Mayo"       "off"
-      6  "Junio"      "off"
-      7  "Julio"      "off"
-      8  "Agosto"     "off"
-      9  "Septiembre" "off"
-      10 "Octubre"    "off"
-      11 "Noviembre"  "off"
-      12 "Diciembre"  "off"
-      13 "*"          "off"
+        1  "Enero"      "off"
+        2  "Febrero"    "off"
+        3  "Marzo"      "off"
+        4  "Abril"      "off"
+        5  "Mayo"       "off"
+        6  "Junio"      "off"
+        7  "Julio"      "off"
+        8  "Agosto"     "off"
+        9  "Septiembre" "off"
+        10 "Octubre"    "off"
+        11 "Noviembre"  "off"
+        12 "Diciembre"  "off"
+        13 "*"          "off"
     )
+
+    selected_months=()
 
     selected_months=$(dialog --stdout --title "$title" --checklist "\nSeleccionar mes(es) del año" 0 0 0 "${month_a[@]}")
 
+  # Comprobar si el usuario a presionado a cancelar
+
+    message="\nNo ha seleccionado ningún mes, si no lo añade se ejecutará todos los meses. ¿Estás seguro?"
+
+    input_alert "$selected_months" "months" "$message"
 }
 
-users && enter_command && comment && time_selected && days && months
+function input_alert {
+
+    array=$1
+    nom_func=$2
+    message=$3
+
+    if [ -z $array ]; then
+
+        dialog --stdout --title "$title" --yesno "$message" 0 0
+
+        if [ $? -eq 1 ]; then
+
+            "$nom_func"
+        
+        fi
+    
+    fi
+
+
+}
+
+# Obtención datos usuario (BRUTOS)
+
+users && time_selected && concret_days
+
+if [ $check -eq 1 ]; then
+
+  months && days && comment && enter_command
+
+else
+
+  comment && enter_command
+
+fi
+
+# Preparación datos (LIMPIO)
+
+
+# Comprobación previa insercción datos

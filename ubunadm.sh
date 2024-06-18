@@ -53,7 +53,7 @@ case $choice in
         select_option
         ;;
     "2 Monitoreo sistema")
-        bashtop
+        ./functions/monitor/main.sh
         select_option
         ;;
     "3 Gestión de la red y del firewall")
